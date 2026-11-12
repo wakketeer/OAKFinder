@@ -1,0 +1,140 @@
+:root {
+  --bg: #f4f3f0;
+  --surface: #ffffff;
+  --text: #1c1f22;
+  --muted: #6b7075;
+  --line: #dcdad5;
+  --primary: #1f2a33;
+  --primary-text: #ffffff;
+  --accent: #b5532a;
+  --danger: #b3261e;
+  --radius: 12px;
+  --tap: 52px;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121416;
+    --surface: #1c1f22;
+    --text: #eceae6;
+    --muted: #9aa0a6;
+    --line: #2e3236;
+    --primary: #e9e6df;
+    --primary-text: #121416;
+    --accent: #e08a5f;
+    --danger: #f2867f;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 17px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+a { color: inherit; }
+h1, h2, h3 { margin: 0; }
+
+.bar {
+  position: sticky; top: 0; z-index: 5;
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px;
+  padding: calc(8px + env(safe-area-inset-top)) 12px 8px;
+  background: var(--surface); border-bottom: 1px solid var(--line);
+}
+.bar-title { text-align: center; font-weight: 600; font-size: 17px; line-height: 1.2; }
+.bar > h1.bar-title { grid-column: 1 / -1; padding: 6px 0; }
+
+.screen { max-width: 720px; margin: 0 auto; padding: 16px 16px 32px; }
+.screen.capture { padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
+.section { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 20px 0 8px; }
+.muted { color: var(--muted); }
+.small { font-size: 14px; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.error { color: var(--danger); }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; display: grid; gap: 10px; }
+.card p { margin: 0; }
+label { font-weight: 600; font-size: 15px; }
+input {
+  width: 100%; min-height: var(--tap); padding: 10px 14px;
+  font: inherit; color: var(--text); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 10px;
+}
+.fields { display: grid; gap: 10px; margin-top: 20px; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 44px; padding: 8px 14px;
+  font: inherit; font-weight: 600; text-decoration: none; cursor: pointer;
+  color: var(--text); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 10px;
+  touch-action: manipulation; user-select: none; -webkit-user-select: none;
+}
+.btn:disabled { opacity: .4; cursor: default; }
+.btn.ghost { border-color: transparent; background: transparent; padding: 8px 6px; }
+.btn.primary { background: var(--primary); color: var(--primary-text); border-color: var(--primary); }
+.btn.big { width: 100%; min-height: 60px; font-size: 18px; }
+.btn.huge { width: 100%; min-height: 68px; font-size: 20px; }
+.btn.camera { border-style: dashed; border-width: 2px; margin-top: 8px; }
+.btn.flag[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); }
+.btn.danger { color: var(--danger); border-color: var(--danger); width: 100%; margin-top: 32px; }
+section > .btn:not(.big) { margin-top: 8px; }
+
+.rug-no { font-size: 28px; font-weight: 700; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
+.tile { position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; background: var(--line); }
+.tile img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; }
+.tile.processing { display: grid; place-items: center; font-size: 14px; color: var(--muted); }
+.tile .x {
+  position: absolute; top: 4px; right: 4px; width: 32px; height: 32px;
+  border: 0; border-radius: 50%; background: rgba(0,0,0,.6); color: #fff;
+  font-size: 20px; line-height: 32px; padding: 0; cursor: pointer;
+}
+
+.dock {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 5;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  background: var(--surface); border-top: 1px solid var(--line);
+}
+.dock .btn { max-width: 688px; margin: 0 auto; display: flex; }
+
+.stacks, .rugs { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.stacks li { display: flex; gap: 8px; align-items: stretch; }
+.stack-row {
+  flex: 1; display: grid; gap: 2px; padding: 12px 14px; text-decoration: none;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+}
+.stack-label { font-weight: 600; }
+.rug-row {
+  display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; align-items: center;
+  padding: 8px; text-decoration: none;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+}
+.rug-row img, .rug-row .noimg { width: 64px; height: 64px; object-fit: cover; border-radius: 8px; background: var(--line); display: block; }
+.rug-info { display: grid; gap: 2px; min-width: 0; }
+.rug-info > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.l1 { font-weight: 600; }
+.star { color: var(--accent); }
+.badge { font-size: 12px; font-weight: 600; padding: 1px 6px; border-radius: 6px; background: var(--line); color: var(--muted); }
+#export { margin-bottom: 16px; }
+
+.viewer { position: fixed; inset: 0; z-index: 20; background: rgba(0,0,0,.92); display: grid; place-items: center; }
+.viewer[hidden] { display: none; }
+.viewer img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+.toast {
+  position: fixed; left: 50%; bottom: calc(96px + env(safe-area-inset-bottom)); z-index: 30;
+  transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
+  padding: 10px 16px; border-radius: 10px; max-width: calc(100% - 32px);
+  background: var(--primary); color: var(--primary-text); font-weight: 600;
+  transition: opacity .15s, transform .15s;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast.error { background: var(--danger); color: #fff; }
+
+/* Visually hidden but still clickable through its <label> (iOS needs this rather than display:none). */
+.vh { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; clip: rect(0 0 0 0); }
